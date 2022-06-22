@@ -1,4 +1,4 @@
-package com.alanAmanco.minhasfinancas.api.resource;
+package com.alanAmanco.minhasfinancas.model.enums;
 
 public enum TipoLancamento {
 
