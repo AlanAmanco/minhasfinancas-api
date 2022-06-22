@@ -1,8 +1,8 @@
 package com.alanAmanco.minhasfinancas.model.entity;
 
 
-import com.alanAmanco.minhasfinancas.service.impl.StatusLancamento;
-import com.alanAmanco.minhasfinancas.model.enums.TipoLancamento;
+import com.alanAmanco.minhasfinancas.model.enums.StatusLancamento;
+import com.alanAmanco.minhasfinancas.api.resource.TipoLancamento;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.*;

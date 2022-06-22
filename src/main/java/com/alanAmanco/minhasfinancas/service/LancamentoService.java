@@ -1,7 +1,7 @@
 package com.alanAmanco.minhasfinancas.service;
 
 import com.alanAmanco.minhasfinancas.model.entity.Lancamento;
-import com.alanAmanco.minhasfinancas.service.impl.StatusLancamento;
+import com.alanAmanco.minhasfinancas.model.enums.StatusLancamento;
 
 import java.util.List;
 

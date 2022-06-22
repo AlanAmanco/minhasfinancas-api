@@ -2,6 +2,7 @@ package com.alanAmanco.minhasfinancas.service.impl;
 
 import com.alanAmanco.minhasfinancas.exception.RegraNegociosException;
 import com.alanAmanco.minhasfinancas.model.entity.Lancamento;
+import com.alanAmanco.minhasfinancas.model.enums.StatusLancamento;
 import com.alanAmanco.minhasfinancas.model.repository.LancamentoRepository;
 import com.alanAmanco.minhasfinancas.service.LancamentoService;
 import org.springframework.data.domain.Example;

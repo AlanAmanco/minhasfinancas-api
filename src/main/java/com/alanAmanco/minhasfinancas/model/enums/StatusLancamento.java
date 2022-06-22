@@ -1,4 +1,4 @@
-package com.alanAmanco.minhasfinancas.service.impl;
+package com.alanAmanco.minhasfinancas.model.enums;
 
 public enum StatusLancamento {
 
