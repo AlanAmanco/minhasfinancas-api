@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/lancamentos")
 public class LancamentoResource {
@@ -19,9 +22,34 @@ public class LancamentoResource {
     private LancamentoService service;
     private UsuarioService usuarioService;
 
-    public LancamentoResource(LancamentoService service) {
+    public LancamentoResource( LancamentoService service, UsuarioService usuarioService ) {
         this.service = service;
+        this.usuarioService = usuarioService;
     }
+
+    public ResponseEntity buscar(
+            @RequestParam(value = "descricao",required = false) String descricao,
+            @RequestParam(value = "mes",required = false) Integer mes,
+            @RequestParam(value = "ano",required = false) Integer ano,
+            @RequestParam(value = "usuario") Long idUsuario
+    ){
+        Lancamento lancamentoFiltro = new Lancamento();
+        lancamentoFiltro.setDescricao(descricao);
+        lancamentoFiltro.setMes(mes);
+        lancamentoFiltro.setAno(ano);
+
+        Optional<Usuario> usuario = usuarioService.obterPorId(idUsuario);
+        if(usuario.isPresent()){
+            return ResponseEntity.badRequest().body("Não foi possível realizar a consulta. Usuário não encontrado");
+        }else{
+            lancamentoFiltro.setUsuario(usuario.get());
+        }
+
+        List<Lancamento> lancamentos = service.buscar(lancamentoFiltro);
+        return ResponseEntity.ok(lancamentos);
+    }
+
+
 
     public ResponseEntity salvar(@RequestBody LancamentoDTO dto){
         try {
