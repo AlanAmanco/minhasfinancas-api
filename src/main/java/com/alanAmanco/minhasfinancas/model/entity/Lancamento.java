@@ -13,6 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "lancamento" ,schema = "financas" )
 public class Lancamento {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,6 +27,30 @@ public class Lancamento {
 
     @Column(name = "ano")
     private Integer ano;
+
+    public Lancamento(Long id,
+                      String descricao,
+                      Integer mes,
+                      Integer ano,
+                      Usuario usuario,
+                      BigDecimal valor,
+                      LocalDate dataCadastro,
+                      TipoLancamento tipo,
+                      StatusLancamento status) {
+
+        this.id = id;
+        this.descricao = descricao;
+        this.mes = mes;
+        this.ano = ano;
+        this.usuario = usuario;
+        this.valor = valor;
+        this.dataCadastro = dataCadastro;
+        this.tipo = tipo;
+        this.status = status;
+    }
+
+    public Lancamento() {
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
