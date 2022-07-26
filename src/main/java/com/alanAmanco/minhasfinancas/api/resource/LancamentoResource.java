@@ -51,6 +51,12 @@ public class LancamentoResource {
         return ResponseEntity.ok(lancamentos);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity obterLancamento(@PathVariable("id") Long id){
+            return service.obterPorId(id)
+                    .map( lancamento -> new ResponseEntity( converter(lancamento), HttpStatus.OK) )
+                    .orElseGet( () -> new ResponseEntity(HttpStatus.NOT_FOUND) );
+    }
 
     @PostMapping
     public ResponseEntity salvar(@RequestBody LancamentoDTO dto){
@@ -101,6 +107,20 @@ public class LancamentoResource {
             service.delatar(entidade);
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }).orElseGet(()-> new ResponseEntity("Lancamento não encontrado na base de Datos.",HttpStatus.BAD_REQUEST));
+    }
+
+    private LancamentoDTO converter( Lancamento lancamento) {
+        LancamentoDTO lancamentoDTO = new LancamentoDTO();
+        lancamentoDTO.setId(lancamento.getId());
+        lancamentoDTO.setDescricao(lancamento.getDescricao());
+        lancamentoDTO.setAno(lancamento.getAno());
+        lancamentoDTO.setMes(lancamento.getMes());
+        lancamentoDTO.setValor(lancamento.getValor());
+        lancamentoDTO.setStatus(lancamento.getStatus().name());
+        lancamentoDTO.setTipo(lancamento.getTipo().name());
+        lancamentoDTO.setUsuario(lancamento.getUsuario().getId());
+
+        return lancamentoDTO;
     }
 
     private Lancamento converter(LancamentoDTO dto){
