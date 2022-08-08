@@ -94,8 +94,8 @@ public class LancamentoServiceImpl implements LancamentoService {
     @Transactional(readOnly = true)
     public BigDecimal obterSaldoPorUsuario(Long id) {
 
-        BigDecimal receitas = repository.obterSaldoPorTipoLancamentoUsuario(id, TipoLancamento.RECEITA);
-        BigDecimal despesa = repository.obterSaldoPorTipoLancamentoUsuario(id, TipoLancamento.DESPESA);
+        BigDecimal receitas = repository.obterSaldoPorTipoLancamentoUsuarioStatus(id, TipoLancamento.RECEITA, StatusLancamento.EFETIVADO);
+        BigDecimal despesa = repository.obterSaldoPorTipoLancamentoUsuarioStatus(id, TipoLancamento.DESPESA, StatusLancamento.EFETIVADO);
 
         if(receitas == null){
             receitas = BigDecimal.ZERO;
