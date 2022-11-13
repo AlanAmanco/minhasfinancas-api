@@ -1,8 +1,10 @@
 package com.alanAmanco.minhasfinancas.api.resource;
 
+import com.alanAmanco.minhasfinancas.DTO.TokenDTO;
 import com.alanAmanco.minhasfinancas.DTO.UsuarioDTO;
 import com.alanAmanco.minhasfinancas.exception.RegraNegociosException;
 import com.alanAmanco.minhasfinancas.model.entity.Usuario;
+import com.alanAmanco.minhasfinancas.service.JwtService;
 import com.alanAmanco.minhasfinancas.service.LancamentoService;
 import com.alanAmanco.minhasfinancas.service.UsuarioService;
 import org.springframework.http.HttpStatus;
@@ -19,16 +21,24 @@ public class UsuarioResource {
     private UsuarioService service;
     private LancamentoService lancamentoService;
 
-    public UsuarioResource(UsuarioService service, LancamentoService lancamentoService ) {
+    private JwtService jwtService;
+
+    public UsuarioResource(UsuarioService service, LancamentoService lancamentoService, JwtService jwtService) {
         this.service = service;
         this.lancamentoService = lancamentoService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/autenticar")
     public ResponseEntity autentificar(@RequestBody UsuarioDTO dto){
         try {
+
             Usuario usuarioAutenticado = service.autenticar(dto.getEmail(),dto.getSenha());
-            return  ResponseEntity.ok(usuarioAutenticado);
+            String token = jwtService.gerarTken( usuarioAutenticado);
+            TokenDTO tokenDTO = new TokenDTO( usuarioAutenticado.getNome(),usuarioAutenticado.getId(), token);
+
+            return  ResponseEntity.ok(tokenDTO);
+
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
